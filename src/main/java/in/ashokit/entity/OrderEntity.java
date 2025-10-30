@@ -3,6 +3,8 @@ package in.ashokit.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 
@@ -32,8 +34,12 @@ public class OrderEntity {
 
     private String razorpayPaymentId;
 
+    @CreationTimestamp
+    @Column(name = "date_created", updatable = false)
     private LocalDate dateCreated;
 
+    @UpdateTimestamp
+    @Column(name = "date_updated", insertable = false)
     private LocalDate lastUpdated;
 
     private String customerEmail;

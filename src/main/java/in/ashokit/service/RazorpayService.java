@@ -2,6 +2,7 @@ package in.ashokit.service;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
+import com.razorpay.Refund;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,5 +32,17 @@ public class RazorpayService {
         Order order = razorpayClient.Orders.create(orderRequest);
 
         return order.get("id");
+    }
+
+    public String refundPayment(String razorpayPaymentId, Integer amount) throws Exception {
+
+        this.razorpayClient = new RazorpayClient(keyId, keySecret);
+
+        JSONObject refundRequest = new JSONObject();
+        refundRequest.put("amount", amount);
+
+        Refund refund = razorpayClient.Payments.refund(razorpayPaymentId, refundRequest);
+
+        return refund.toString();
     }
 }
